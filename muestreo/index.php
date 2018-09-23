@@ -25,41 +25,19 @@
 			<a href="https://es-la.facebook.com/CTSBariloche/" target="_blank">Facebook CTS</a>
 		</div>
 
-	</div>	
-	<div id="actuales">
-		<!--Valores actuales de temperatura, humedad, presión, uv, viento, lluvia, airquality-->
+	</div>
 
-		<h2 style="margin-left: 7%;">ACTUAL VALUES:</h2>
-		<table>
-			<tr>
-				<th>Temp[°C]</th>
-				<th>Pressure[]</th>
-				<th>Humidity[%]</th>
-				<th>UV[%]</th>
-				<th>Wind[Km/h]</th>
-				<th>Rain[mm]</th>
-				<th>Monoxide[]</th>
-				<th>Dioxide[]</th>
-				<th>Ammonia[]</th>
-			</tr>
-			<tr>
-				<td>34</td>
-				<td>800</td>
-				<td>55</td>
-				<td>3</td>
-				<td>6</td>
-				<td>0.5</td>
-				<td>0</td>
-				<td>1.3</td>
-				<td>2</td>
-
-			</tr>
-		</table>
 	
+	<div id="actuales">
+		<!--Valores actuales de temperatura, humedad, presión, uv, viento, lluvia, airquality
+		Se obtienen con javascript  | actualizado automatico cada 10 min
+		-->
+
+		
 	</div>
 	<div id="pronostico">
 		<!--Pronostico del tiempo, no disponible aun-->
-		
+
 
 	</div>
 
@@ -69,8 +47,7 @@
 		<h2 style="margin-left: 5%;">WEATHER THIS WEEK:</h2>
 
 		<div id="SG_temperatura">
-			<img src="imagenCTS.png" id="imagenCTS"/>
-			<h4>Temperatura vs tiempo</h4>
+			
 		</div>
 		<div id="SG_presion">
 			<img src="imagenCTS.png" id="imagenCTS"/>
@@ -145,6 +122,16 @@
 	</div>
 
 </div>
+
+
+
+<script src="jquery.min.js"/>
+<script>jQuery.noConflict();</script>
+<script src="p5.min.js"></script>
+<script src="p5.dom.min.js"></script>
+<script src="p5.sound.min.js"></script>
+
+<script src="dibujarSemanales.js"></script>
 
 </body>
 </html>

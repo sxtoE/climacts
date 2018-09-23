@@ -1,7 +1,12 @@
 //var x = '<?=x;?>';
 //var y = '<?=y;?>';
+jQuery(document).ready(function($){
+	
+
+alert("alos");
 
 
+});
 
 
 function setup() {
@@ -24,3 +29,7 @@ function draw() {
  	//ellipse(mouseX, mouseY, alto, ancho);  
 
 }
+
+
+
+

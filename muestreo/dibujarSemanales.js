@@ -121,8 +121,13 @@ jQuery(document).ready(function($){
 			var cnvTotal = createCanvas(canvasAncho, canvasAlto);
 			cnvTotal.position(xSemanal, ySemanal);
 			gr_temperatura = createGraphics(anchoGraficos, altoGraficos);		//Graficos de cada unidad
-			
-			console.log("Tu querida position en X de temperatur: "+xTemperatura);
+			gr_presion = createGraphics(anchoGraficos, altoGraficos);
+			gr_humedad = createGraphics(anchoGraficos, altoGraficos);
+			gr_viento = createGraphics(anchoGraficos, altoGraficos);
+			gr_lluvia = createGraphics(anchoGraficos, altoGraficos);
+			gr_dioxido = createGraphics(anchoGraficos, altoGraficos);
+			gr_monoxido = createGraphics(anchoGraficos, altoGraficos);
+			gr_amoniaco = createGraphics(anchoGraficos, altoGraficos);
 		}
 	}
 
@@ -130,9 +135,23 @@ jQuery(document).ready(function($){
 	function draw(){
 		if(listoDibujeActuales==true){
 			gr_temperatura.background(255,0,0);
+			gr_presion.background(0,255,0);
+			gr_humedad.background(0,0,255);
+			gr_viento.background(255,0,0);
+			gr_lluvia.background(0,255,0);
+			gr_dioxido.background(0,0,255);
+			gr_monoxido.background(255,0,0);
+			gr_amoniaco.background(0,255,0);
+		
+			image(gr_temperatura, xTemperatura - xSemanal, yTemperatura - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_presion, xPresion - xSemanal, yPresion - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_humedad, xHumedad - xSemanal, yHumedad - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_viento, xViento - xSemanal, yViento - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_lluvia, xLluvia - xSemanal, yLluvia - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_dioxido, xDioxido - xSemanal, yDioxido - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_monoxido, xMonoxido - xSemanal, yMonoxido - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_amoniaco, xAmoniaco - xSemanal, yAmoniaco - ySemanal, anchoGraficos, altoGraficos);
 			
-			image(gr_temperatura, xSemanal, ySemanal, anchoGraficos, altoGraficos);
-			//console.log("Tu querida position en X de image es: "+xTemperatura);
 		}
 	}
 

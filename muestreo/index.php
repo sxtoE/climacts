@@ -47,34 +47,35 @@
 		<h2 style="margin-left: 5%;">WEATHER THIS WEEK:</h2>
 
 		<div id="SG_temperatura">
-			
+			<img src="imagenCTS.png" class="imagenCTS" id="ins_temperatura"/>
+			<h4>Temperatura vs tiempo</h4>
 		</div>
 		<div id="SG_presion">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Presion vs tiempo</h4>
 		</div>
 		<div id="SG_humedad">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Humedad vs tiempo</h4>
 		</div>
 		<div id="SG_viento">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Viento vs tiempo</h4>
 		</div>
 		<div id="SG_lluvia">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Lluvia vs tiempo</h4>
 		</div>
 		<div id="SG_dioxido">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Dióxido vs tiempo</h4>
 		</div>
 		<div id="SG_monoxido">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Monóxido vs tiempo</h4>
 		</div>
 		<div id="SG_amoniaco">
-			<img src="imagenCTS.png" id="imagenCTS"/>
+			<img src="imagenCTS.png" class="imagenCTS"/>
 			<h4>Amoníaco vs tiempo</h4>
 		</div>
 

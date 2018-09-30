@@ -6,6 +6,7 @@ var ySemanal; //Position referenced to top. (Big and unique canvas)
 //Positions of the different graphics. 
 var xTemperatura, yTemperatura; 	
 var xPresion, yPresion; 
+var xUv, yUv; 
 var xHumedad, yHumedad; 
 var xViento, yViento; 
 var xLluvia, yLluvia; 
@@ -13,7 +14,18 @@ var xDioxido, yDioxido;
 var xMonoxido, yMonoxido; 
 var xAmoniaco, yAmoniaco; 
 //Definitions of global variables of the objects of graphics
-var gr_temperatura, gr_presion, gr_humedad, gr_viento, gr_lluvia, gr_dioxido, gr_monoxido, gr_amoniaco; 
+var gr_temperatura, gr_presion, gr_uv, gr_humedad, gr_viento, gr_lluvia, gr_dioxido, gr_monoxido, gr_amoniaco; 
+
+//Arrays wich have 168 ours of values for semanal graphs
+var promTemperatura = [];
+var promHumedad = []; 
+var promPresion = [];
+var promUv = [];
+var promViento = [];
+var promLluvia = [];
+var promDioxido = [];
+var promMonoxido = [];
+var promAmoniaco = [];
 
 
 
@@ -22,9 +34,10 @@ var listoDibujeActuales = false;
 
 jQuery(document).ready(function($){
 	actualizarActuales();
-  	setInterval(actualizarActuales, 600000);
-
-  	function actualizarActuales(){
+	actualizarSemanales();  
+	
+	etInterval(actualizarActuales, 600000);
+	function actualizarActuales(){
       $.ajax({
            url:"server1.php",
            method:"POST",
@@ -33,10 +46,9 @@ jQuery(document).ready(function($){
            listoDibujeActuales = true; 
            if(listoDibujeActuales == true){
 			   calcularMeasuresCanvas();
-	         }
-
+	        }
          }
-      });
+	  });
 	}
      function calcularMeasuresCanvas(){
      	if(listoDibujeActuales == true){
@@ -77,6 +89,10 @@ jQuery(document).ready(function($){
 			var posicionPresion = O_presion.getBoundingClientRect();
 			xPresion = posicionPresion.left;
 			yPresion = posicionPresion.top;
+			var O_uv = document.getElementById('SG_uv');
+			var posicionUv = O_uv.getBoundingClientRect();
+			xUv = posicionUv.left;
+			yUv = posicionUv.top;
 			var O_humedad = document.getElementById('SG_humedad');
 			var posicionHumedad = O_humedad.getBoundingClientRect();
 			xHumedad = posicionHumedad.left;
@@ -103,25 +119,34 @@ jQuery(document).ready(function($){
 			yAmoniaco = posicionAmoniaco.top;
 			
 			//That was the position of every graph and the unique canvas
-
+			
 			setup();
-           	draw();
-
-
-
-
+			
+			draw();
+		
+	
+	
+	
 		}
-
+	
 	}
-
+/*
+	function traerValoresSemanales(){
+		//Traer valores semanales del server (file server2.php)
+	
+	
+	}
+*/
 });
 
 	function setup(){
 		if(listoDibujeActuales == true){
 			var cnvTotal = createCanvas(canvasAncho, canvasAlto);
 			cnvTotal.position(xSemanal, ySemanal);
+			
 			gr_temperatura = createGraphics(anchoGraficos, altoGraficos);		//Graficos de cada unidad
 			gr_presion = createGraphics(anchoGraficos, altoGraficos);
+			gr_uv = createGraphics(anchoGraficos, altoGraficos);
 			gr_humedad = createGraphics(anchoGraficos, altoGraficos);
 			gr_viento = createGraphics(anchoGraficos, altoGraficos);
 			gr_lluvia = createGraphics(anchoGraficos, altoGraficos);
@@ -135,16 +160,53 @@ jQuery(document).ready(function($){
 	function draw(){
 		if(listoDibujeActuales==true){
 			gr_temperatura.background(255,0,0);
-			gr_presion.background(0,255,0);
-			gr_humedad.background(0,0,255);
-			gr_viento.background(255,0,0);
-			gr_lluvia.background(0,255,0);
-			gr_dioxido.background(0,0,255);
-			gr_monoxido.background(255,0,0);
-			gr_amoniaco.background(0,255,0);
+			gr_presion.background(255,255,255);
+			gr_uv.background(255,255,255);
+			gr_humedad.background(255,255,255);
+			gr_viento.background(255,255,255);
+			gr_lluvia.background(255,255,255);
+			gr_dioxido.background(255,255,255);
+			gr_monoxido.background(255,255,255);
+			gr_amoniaco.background(255,255,255);
 		
+			
+
+			//Procedemos a dibujar los axis X e Y 
+			
+			gr_temperatura.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_temperatura.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_presion.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_presion.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_uv.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_uv.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_humedad.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_humedad.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_viento.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_viento.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_lluvia.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_lluvia.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_dioxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_dioxido.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_monoxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_monoxido.line(10,altoGraficos-10,10,10);	//Eje Y			
+			gr_amoniaco.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_amoniaco.line(10,altoGraficos-10,10,10);		//Eje Y
+		
+			
+			
+
+			//Ahora que están dibujadas las lineas, hay que llamar a la funcion que nos dibujará los valores en forma de puntos
+			//Para dibujar los valores necesitamos escalar los gráficos. 
+			//En eje X, se escala fácil, 168 marcas 1 por hora, y 7 líneas visibles una por día. 
+			//En eje Y, no se escala nada fácil.
+			
+			//actualizarSemanales(); 
+
+
+			//Procedemos a proyectar las imagenes. 
 			image(gr_temperatura, xTemperatura - xSemanal, yTemperatura - ySemanal, anchoGraficos, altoGraficos);
 			image(gr_presion, xPresion - xSemanal, yPresion - ySemanal, anchoGraficos, altoGraficos);
+			image(gr_uv, xUv - xSemanal, yUv - ySemanal, anchoGraficos, altoGraficos);
 			image(gr_humedad, xHumedad - xSemanal, yHumedad - ySemanal, anchoGraficos, altoGraficos);
 			image(gr_viento, xViento - xSemanal, yViento - ySemanal, anchoGraficos, altoGraficos);
 			image(gr_lluvia, xLluvia - xSemanal, yLluvia - ySemanal, anchoGraficos, altoGraficos);
@@ -156,3 +218,7 @@ jQuery(document).ready(function($){
 	}
 
 
+	function actualizarSemanales(){
+		//traerValoresSemanales();
+		//Graficar cada puntito para cada valor; 
+	}

@@ -106,7 +106,7 @@ td{
 	float: left;
 }
 
-#SG_temperatura, #SG_presion, #SG_humedad, #SG_viento, #SG_lluvia, #SG_dioxido, #SG_monoxido, #SG_amoniaco{
+#SG_temperatura, #SG_presion, #SG_uv, #SG_humedad, #SG_viento, #SG_lluvia, #SG_dioxido, #SG_monoxido, #SG_amoniaco{
 	height: 30%; 
 	width: 40%;
 	background-color: black;

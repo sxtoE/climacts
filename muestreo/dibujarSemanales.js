@@ -36,7 +36,7 @@ jQuery(document).ready(function($){
 	actualizarActuales();
 	actualizarSemanales();  
 	
-	etInterval(actualizarActuales, 600000);
+	setInterval(actualizarActuales, 600000);
 	function actualizarActuales(){
       $.ajax({
            url:"server1.php",

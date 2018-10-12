@@ -26,7 +26,16 @@ var promLluvia = [];
 var promDioxido = [];
 var promMonoxido = [];
 var promAmoniaco = [];
+var maximos = [];
+var minimos = []; 
 
+var nana = false;
+
+//Object received from json of semanal data
+var objectSemanal = 0; 
+
+//ancho y alto de los elipses de cada valor de cada grafico semanal
+var anchoElipses = 3, altoElipses = 3; 
 
 
 
@@ -37,6 +46,8 @@ jQuery(document).ready(function($){
 	actualizarSemanales();  
 	
 	setInterval(actualizarActuales, 600000);
+	setInterval(actualizarSemanales, 600000);
+
 	function actualizarActuales(){
       $.ajax({
            url:"server1.php",
@@ -50,6 +61,21 @@ jQuery(document).ready(function($){
          }
 	  });
 	}
+	
+	function actualizarSemanales(){
+		$.ajax({
+			type:"POST",
+			dataType: "json",
+			url: "server2.php",
+			success: function(data){
+				objectSemanal = data;
+				
+			}
+		});	
+	}
+
+	
+
      function calcularMeasuresCanvas(){
      	if(listoDibujeActuales == true){
      		//Obtener width, height del div donde irá el canvas: 
@@ -127,22 +153,18 @@ jQuery(document).ready(function($){
 	
 	
 	
-		}
-	
+		}	
 	}
-/*
-	function traerValoresSemanales(){
-		//Traer valores semanales del server (file server2.php)
-	
-	
-	}
-*/
 });
 
 	function setup(){
 		if(listoDibujeActuales == true){
 			var cnvTotal = createCanvas(canvasAncho, canvasAlto);
 			cnvTotal.position(xSemanal, ySemanal);
+			
+			
+			
+			
 			
 			gr_temperatura = createGraphics(anchoGraficos, altoGraficos);		//Graficos de cada unidad
 			gr_presion = createGraphics(anchoGraficos, altoGraficos);
@@ -159,7 +181,7 @@ jQuery(document).ready(function($){
 	
 	function draw(){
 		if(listoDibujeActuales==true){
-			gr_temperatura.background(255,0,0);
+			gr_temperatura.background(255,255,255);
 			gr_presion.background(255,255,255);
 			gr_uv.background(255,255,255);
 			gr_humedad.background(255,255,255);
@@ -174,23 +196,23 @@ jQuery(document).ready(function($){
 			//Procedemos a dibujar los axis X e Y 
 			
 			gr_temperatura.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_temperatura.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_temperatura.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_presion.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_presion.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_presion.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_uv.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_uv.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_uv.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_humedad.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_humedad.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_humedad.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_viento.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_viento.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_viento.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_lluvia.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_lluvia.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_lluvia.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_dioxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_dioxido.line(10,altoGraficos-10,10,10);	//Eje Y
+			gr_dioxido.line(30,altoGraficos-10,30,10);	//Eje Y
 			gr_monoxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_monoxido.line(10,altoGraficos-10,10,10);	//Eje Y			
+			gr_monoxido.line(30,altoGraficos-10,30,10);	//Eje Y			
 			gr_amoniaco.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
-			gr_amoniaco.line(10,altoGraficos-10,10,10);		//Eje Y
+			gr_amoniaco.line(30,altoGraficos-10,30,10);		//Eje Y
 		
 			
 			
@@ -200,9 +222,39 @@ jQuery(document).ready(function($){
 			//En eje X, se escala fácil, 168 marcas 1 por hora, y 7 líneas visibles una por día. 
 			//En eje Y, no se escala nada fácil.
 			
-			//actualizarSemanales(); 
+			//En el objeto objectSemanal tenemos todos los datos de los puntitos. 
+			
+			var zeroX = 10;
+			var zeroY = altoGraficos - 10;
+			var textoX = zeroX-8; //Posición del texto sobre el eje ordenadas (dice x porque es izq der)
+			//text(objectSemanal.minimos[0], zeroX, zeroY);  
+			//Vamos a dibujar sobre el gráfico de temperatura: 
+			 
+			if(objectSemanal != 0 && nana == false){  //necesario para que no se repita. 
+				promTemperatura = objectSemanal.temperatura; 
+				promPresion = objectSemanal.presion;
+				promUv = objectSemanal.uv; 
+				promHumedad = objectSemanal.humedad; 
+				promViento = objectSemanal.viento; 
+				promLluvia = objectSemanal.lluvia; 
+				promDioxido = objectSemanal.dioxido; 
+				promMonoxido = objectSemanal.monoxido; 
+				promAmoniaco = objectSemanal.amoniaco; 
+				maximos = objectSemanal.maximos; 
+				minimos = objectSemanal.minimos; 
+				
+				nana = true; 
+				
+			}
+			
+			//Acabamos de obtener arrays con todos los puntos, ahora dibujemos esos puntos 
+			gr_temperatura.ellipse(zeroX, zeroY,anchoElipses, altoElipses);//Puntito con el valor mínimo
+			gr_temperatura.text(minimos[0],textoX, zeroY);
+			gr_temperatura.text(maximos[0],textoX, 50);
+			
 
 
+			
 			//Procedemos a proyectar las imagenes. 
 			image(gr_temperatura, xTemperatura - xSemanal, yTemperatura - ySemanal, anchoGraficos, altoGraficos);
 			image(gr_presion, xPresion - xSemanal, yPresion - ySemanal, anchoGraficos, altoGraficos);
@@ -218,7 +270,7 @@ jQuery(document).ready(function($){
 	}
 
 
-	function actualizarSemanales(){
-		//traerValoresSemanales();
-		//Graficar cada puntito para cada valor; 
-	}
+
+
+	
+	

@@ -116,7 +116,7 @@
 			<img src="imagenCTS.png" id="imagenCTS"/>
 		</div>
 	</div>
-
+	<input type="hidden" id="oculto"/>
 </div>
 
 

@@ -242,16 +242,24 @@ jQuery(document).ready(function($){
 				promAmoniaco = objectSemanal.amoniaco; 
 				maximos = objectSemanal.maximos; 
 				minimos = objectSemanal.minimos; 
-				
+	
 				nana = true; 
 				
 			}
+
 			
 			//Acabamos de obtener arrays con todos los puntos, ahora dibujemos esos puntos 
 			gr_temperatura.ellipse(zeroX, zeroY,anchoElipses, altoElipses);//Puntito con el valor mínimo
 			gr_temperatura.text(minimos[0],textoX, zeroY);
-			gr_temperatura.text(maximos[0],textoX, 50);
-			
+			gr_temperatura.text(maximos[0],textoX, 10);
+			gr_temperatura.text((Math.round((maximos[0]-minimos[0]) / 2)), textoX, (altoGraficos / 2));
+			var i = 0; 
+			while(i < 168){
+				if((promTemperatura[i] > minimos[0]+1) && (promTemperatura[i] < maximos[0]-1)){
+					gr_temperatura.ellipse(Math.round((anchoGraficos/168) * i), (zeroY/Math.round((maximos[0]-minimos[0])/2)) * promTemperatura[i], anchoElipses, altoElipses); //Cada uno de los 168 puntos
+				}
+				i++;	
+			}
 
 
 			

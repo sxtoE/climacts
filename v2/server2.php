@@ -140,7 +140,7 @@
         $prepararParaJson['time'] = $A_time;    //Preparo el json con time
         $i = 0; 
         while($i < 7){
-            $fechasImportantes[$i] = substr($fechasGraf[$i],8,2);
+            $fechasImportantes[$i] = substr($fechasGraf[$i],0,10);
             $i++;
         }
         $prepararParaJson['fechasGraf'] = $fechasImportantes;

@@ -45,7 +45,15 @@
 	<div id="semanal">
 		<!--Graficos históricos de la última semana-->
 		<h2 style="margin-left: 5%;">WEATHER THIS WEEK:</h2>
-
+		<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer3" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer4" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer5" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer6" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer7" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer8" style="height: 300px; width: 100%;"></div>
+		<div id="chartContainer9" style="height: 300px; width: 100%;"></div>
 
 
 	</div>
@@ -91,12 +99,9 @@
 
 
 
-<script src="jquery.min.js"/>
+<script src="jquery.min.js"></script>
 <script>jQuery.noConflict();</script>
-<script src="p5.min.js"></script>
-<script src="p5.dom.min.js"></script>
-<script src="p5.sound.min.js"></script>
-
+<script src="canvas.min.js"></script>
 <script src="dibujarSemanales.js"></script>
 
 </body>

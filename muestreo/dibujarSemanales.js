@@ -16,7 +16,7 @@ var xAmoniaco, yAmoniaco;
 //Definitions of global variables of the objects of graphics
 var gr_temperatura, gr_presion, gr_uv, gr_humedad, gr_viento, gr_lluvia, gr_dioxido, gr_monoxido, gr_amoniaco; 
 
-//Arrays wich have 168 ours of values for semanal graphs
+//Arrays wich have 2016  values for semanal graphs
 var promTemperatura = [];
 var promHumedad = []; 
 var promPresion = [];
@@ -30,14 +30,15 @@ var maximos = [];
 var minimos = []; 
 
 var nana = false;
-
+var dibujados = false; 
 //Object received from json of semanal data
 var objectSemanal = 0; 
 
 //ancho y alto de los elipses de cada valor de cada grafico semanal
 var anchoElipses = 3, altoElipses = 3; 
 
-
+var anchoElipses1 = 0.003; 
+var altoElipses1 = 0.003;
 
 var listoDibujeActuales = false; 
 
@@ -69,7 +70,8 @@ jQuery(document).ready(function($){
 			url: "server2.php",
 			success: function(data){
 				objectSemanal = data;
-				
+				console.log(objectSemanal);
+								
 			}
 		});	
 	}
@@ -195,23 +197,23 @@ jQuery(document).ready(function($){
 
 			//Procedemos a dibujar los axis X e Y 
 			
-			gr_temperatura.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_temperatura.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_temperatura.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_presion.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_presion.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_presion.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_uv.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_uv.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_uv.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_humedad.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_humedad.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_humedad.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_viento.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_viento.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_viento.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_lluvia.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_lluvia.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_lluvia.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_dioxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_dioxido.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_dioxido.line(30,altoGraficos-10,30,10);	//Eje Y
-			gr_monoxido.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_monoxido.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_monoxido.line(30,altoGraficos-10,30,10);	//Eje Y			
-			gr_amoniaco.line(10,altoGraficos-10,anchoGraficos-10,altoGraficos-10); //Eje X 
+			gr_amoniaco.line(10,altoGraficos-30,anchoGraficos-10,altoGraficos-30); //Eje X 
 			gr_amoniaco.line(30,altoGraficos-10,30,10);		//Eje Y
 		
 			
@@ -219,13 +221,13 @@ jQuery(document).ready(function($){
 
 			//Ahora que están dibujadas las lineas, hay que llamar a la funcion que nos dibujará los valores en forma de puntos
 			//Para dibujar los valores necesitamos escalar los gráficos. 
-			//En eje X, se escala fácil, 168 marcas 1 por hora, y 7 líneas visibles una por día. 
+			//En eje X, se escala fácil, 2016 marcas 1 cada 5 min, y 7 líneas visibles una por día. 
 			//En eje Y, no se escala nada fácil.
 			
 			//En el objeto objectSemanal tenemos todos los datos de los puntitos. 
 			
 			var zeroX = 10;
-			var zeroY = altoGraficos - 10;
+			var zeroY = altoGraficos - 30;
 			var textoX = zeroX-8; //Posición del texto sobre el eje ordenadas (dice x porque es izq der)
 			//text(objectSemanal.minimos[0], zeroX, zeroY);  
 			//Vamos a dibujar sobre el gráfico de temperatura: 
@@ -249,18 +251,56 @@ jQuery(document).ready(function($){
 
 			
 			//Acabamos de obtener arrays con todos los puntos, ahora dibujemos esos puntos 
-			gr_temperatura.ellipse(zeroX, zeroY,anchoElipses, altoElipses);//Puntito con el valor mínimo
+			//Setear máximos mínimos y medio
 			gr_temperatura.text(minimos[0],textoX, zeroY);
 			gr_temperatura.text(maximos[0],textoX, 10);
-			gr_temperatura.text((Math.round((maximos[0]-minimos[0]) / 2)), textoX, (altoGraficos / 2));
-			var i = 0; 
-			while(i < 168){
-				if((promTemperatura[i] > minimos[0]+1) && (promTemperatura[i] < maximos[0]-1)){
-					gr_temperatura.ellipse(Math.round((anchoGraficos/168) * i), (zeroY/Math.round((maximos[0]-minimos[0])/2)) * promTemperatura[i], anchoElipses, altoElipses); //Cada uno de los 168 puntos
-				}
-				i++;	
-			}
+			var medio = maximos[0] - minimos[0]; 
+			valormedio = medio / 2; 
+			medio = Math.round(valormedio);
+			medio = medio + int(minimos[0]);
+			gr_temperatura.text(medio, textoX, ((altoGraficos-10) / 2));
+			gr_temperatura.text(objectSemanal.fechasGraf[6], zeroX+((anchoGraficos-30)/7)*1, zeroY +12);
+			//alert(anchoGraficos);
+			gr_temperatura.text(objectSemanal.fechasGraf[5], zeroX + ((anchoGraficos-30)/7)*2, zeroY + 12);
+			gr_temperatura.text(objectSemanal.fechasGraf[4], zeroX + ((anchoGraficos-30)/7)*3, zeroY + 12);
+			gr_temperatura.text(objectSemanal.fechasGraf[3], zeroX + ((anchoGraficos-30)/7)*4, zeroY + 12);
+			gr_temperatura.text(objectSemanal.fechasGraf[2], zeroX + ((anchoGraficos-30)/7)*5, zeroY + 12);
+			gr_temperatura.text(objectSemanal.fechasGraf[1], zeroX + ((anchoGraficos-30)/7)*6, zeroY + 12);
+			
+			gr_temperatura.text(objectSemanal.fechasGraf[0], anchoGraficos - 30, zeroY+12);
+			
+			//Eso fue la preparación de los gráficos con las fechas que ve el usuario. Ahora los puntos: 
 
+
+
+
+			
+			
+
+			
+			
+			
+
+			
+			i = 0; 			
+
+			//if(dibujados != true){
+				while(i < 2016){
+					if((promTemperatura[i] > minimos[0]) && (promTemperatura[i] < maximos[0])){
+
+						var puntazo = promTemperatura[i];
+									
+						
+						 
+						
+						
+						gr_temperatura.ellipse(((((anchoGraficos-40)/2016))*i)+30, puntazo,0.1,0.1); //Cada uno de los 2016 puntos
+						
+					}
+					i++;	
+				}
+			//	dibujados = true; 
+			//}	
 
 			
 			//Procedemos a proyectar las imagenes. 

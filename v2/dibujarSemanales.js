@@ -247,7 +247,7 @@ function dibujarSemanales(){
 			showInLegend: true,
 			dataPoints: [
 				{ x: new Date(fechas[6]), y: parseInt(promUv[6])},
-				{ x : new Date(fechas[5]), y: parseInt(promUv[5])},		
+				{ x: new Date(fechas[5]), y: parseInt(promUv[5])},		
 				{ x: new Date(fechas[4]), y: parseInt(promUv[4])},
 				{ x: new Date(fechas[3]), y: parseInt(promUv[3])},
 				{ x: new Date(fechas[2]), y: parseInt(promUv[2])},
